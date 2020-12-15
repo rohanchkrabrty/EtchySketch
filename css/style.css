@@ -1,0 +1,17 @@
+html{
+    box-sizing: border-box;
+}
+*,*::before,*::after{
+    box-sizing: inherit;
+}
+
+.container{
+    display: grid;
+    grid-template-columns: 1fr 4fr;
+    height: 100vh;
+}
+.util{
+    box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, .15);
+    display: flex;
+    padding: 24px 24px 32px 32px;
+}
