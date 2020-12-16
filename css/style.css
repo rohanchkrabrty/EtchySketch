@@ -15,6 +15,7 @@ html {
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
+  line-height: 20px;
 }
 .sidebar {
   box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, 0.15);
@@ -24,6 +25,7 @@ html {
   align-items: flex-end;
   padding: 24px 24px 32px 32px;
 }
+/*--------LIGHT DARK TOGGLE--------*/
 #toggleDark {
   position: relative;
   outline: none;
@@ -55,6 +57,7 @@ html {
   background-color: rgb(117, 117, 117);
   transition: all ease-in-out 0.2s;
 }
+/*--------HEADING--------*/
 .heading {
   width: 100%;
   display: flex;
@@ -79,10 +82,11 @@ html {
 }
 .description {
   width: 100%;
-  line-height: 20px;
   letter-spacing: -0.5px;
   color: #757575;
+  margin: 0;
 }
+/*--------TAB--------*/
 .tab {
   position: relative;
   width: 100%;
@@ -91,7 +95,6 @@ html {
   border-radius: 8px;
   font-weight: 600;
   font-size: 14px;
-  line-height: 20px;
   color: rgba(117, 117, 117, 0.6);
   text-align: center;
 }
@@ -112,7 +115,7 @@ html {
   transition: all ease-in 0.1s;
 }
 .options li.active {
-  transition: all ease-in 0.4s;
+  transition: all ease-in 400ms;
   color: #ec5739;
 }
 .options li:not(.active):hover {
@@ -128,5 +131,58 @@ html {
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
   border-radius: 6px;
   z-index: 1;
-  transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 400ms;
+}
+/*--------GRID CONTROLS--------*/
+.grid-controls {
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: space-between;
+}
+.grid-counter {
+  width: 134px;
+  height: 36px;
+  background: #f3f3f3;
+  border-radius: 8px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #757575;
+  font-size: 14px;
+}
+.grid-counter button {
+  width: 34px;
+  height: 29px;
+}
+#toggle-lines {
+  width: 60px;
+  height: 36px;
+}
+/*--------COMMON--------*/
+.button {
+  display: inline-block;
+  border: none;
+  border-radius: 6px;
+  background-color: #f3f3f3;
+  text-align: center;
+  color: #757575;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 150ms ease;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+button:hover,
+button:focus {
+  background-color: #ebebeb;
+}
+button:active {
+  transform: scale(0.95);
+}
+.special.button {
+  background: #ffffff;
+  box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
+  color: #ec5739;
 }
