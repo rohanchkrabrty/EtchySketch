@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@jaames/iro@5"></script>
     <title>Etchy Sketch</title>
 </head>
 
@@ -35,9 +36,20 @@
                 </div>
                 <button class="button" id="toggle-lines">eye</button>
             </div>
+            <div class="color-picker">
+                <div class="color-picker-box"></div>
+                <svg style="display: none;">
+                    <defs>
+                        <g id="color-picker-handle">
+                            <circle r="7" fill="none" stroke-width="5" stroke="#ffffff"></circle>
+                        </g>
+                    </defs>
+                </svg>
+            </div>
         </div>
         <div class="canvas"></div>
     </div>
     <script src="js/app.js"></script>
 </body>
+
 </html>
