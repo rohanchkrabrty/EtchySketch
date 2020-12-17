@@ -167,16 +167,15 @@ html {
   filter: drop-shadow(0px 1px 1.5px rgba(0, 0, 0, 0.3));*/
 }
 #color-picker-iro {
-  flex-flow: row wrap;
-  align-items: center;
-  justify-content: space-between;
+  flex-flow: column nowrap;
+  margin-bottom: 10px;
 }
 svg.IroBox {
   margin-bottom: 10px;
 }
 #active-color {
-  width: 32px;
-  height: 24px;
+  width: 58px;
+  height: 32px;
   background-color: black;
   border-radius: 6px;
 }
@@ -191,10 +190,6 @@ svg.IroBox {
 }
 #hex {
   width: 91px;
-  height: 32px;
-}
-#saturation {
-  width: 58px;
   height: 32px;
 }
 /*--------COMMON--------*/
