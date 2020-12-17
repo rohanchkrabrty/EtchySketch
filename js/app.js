@@ -1,5 +1,8 @@
 const SLIDER = document.querySelector(".slider");
-let activeColor;
+let activeColor, activeColorHex, activeColorSaturation;
+activeColorHex = document.querySelector('#hex');
+activeColorSaturation = document.querySelector('#saturation');
+
 document.querySelector(".tab .options").addEventListener("click", event => {
     //check if clicked tab is active or not
     if (!event.target.classList.contains("active") && event.target.tagName == "LI") {
@@ -16,6 +19,7 @@ document.querySelector(".tab .options").addEventListener("click", event => {
 //color picker
 const colorPicker = new iro.ColorPicker('.color-picker-box', {
     width: 204,
+    color:'#EA9A39',
     layout: [
         {
             component: iro.ui.Box,
@@ -41,12 +45,20 @@ const colorPicker = new iro.ColorPicker('.color-picker-box', {
     handleSvg: '#color-picker-handle',
     id: 'color-picker-iro'
 });
-colorPicker.on('mount', ()=>{
+colorPicker.on('mount', (colorObject)=>{
+    //hack to add active color div after color box is loaded
     activeColor = document.createElement('div');
     activeColor.id = "active-color";
     document.querySelector('#color-picker-iro').appendChild(activeColor);
     activeColor = document.querySelector('#active-color');
+    updateActiveColor(colorObject.color);
 });
-colorPicker.on('color:change', (color)=>{
+colorPicker.on('color:change', updateActiveColor);
+
+function updateActiveColor(color){
+    //round color saturation to whole no
+    color.saturation = Math.round(color.saturation);
     activeColor.style.backgroundColor = color.hexString;
-});
+    activeColorHex.value = color.hexString;
+    activeColorSaturation.value = `${color.saturation}%`;
+}

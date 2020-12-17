@@ -37,14 +37,23 @@
                 <button class="button" id="toggle-lines">eye</button>
             </div>
             <div class="color-picker">
-                <div class="color-picker-box"></div>
-                <svg style="display: none;">
-                    <defs>
-                        <g id="color-picker-handle">
-                            <circle r="7" fill="none" stroke-width="5" stroke="#ffffff"></circle>
-                        </g>
-                    </defs>
-                </svg>
+                <div class="color-picker-box">
+                    <svg style="width:0;height:0;">
+                        <defs>
+                            <filter id="color-picker-handle-dropshadow" y="-40%" height="180%" x="-40%" width="180%">
+                            <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="black" flood-opacity="0.3"/>
+                            </filter>
+                            <g id="color-picker-handle">
+                                <circle r="7" fill="none" stroke-width="5" stroke="#ffffff"></circle>
+                            </g>
+                        </defs>
+                    </svg>
+                </div>
+                <div class="color-picker-controls">
+                    <button class="button" id="eye-dropper">asd</button>
+                    <input type="text" id="hex" value="#ffffff">
+                    <input type="text" id="saturation" value="100%">
+                </div>
             </div>
         </div>
         <div class="canvas"></div>
