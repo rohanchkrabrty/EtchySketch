@@ -16,7 +16,7 @@ document.querySelector(".tab .options").addEventListener("click", event => {
     event.stopImmediatePropagation();
 })
 
-//color picker
+//-------------------color picker-------------------
 const colorPicker = new iro.ColorPicker(".color-picker-box", {
     width: 204,
     color:"#EA9A39",
@@ -52,3 +52,10 @@ function updateActiveColor(){
     activeColor.style.backgroundColor = colorPicker.color.hexString;
     activeColorHex.value = colorPicker.color.hexString;
 }
+//-------------help about extension---------------
+document.querySelector("#help-about").addEventListener("click", ()=>{
+    document.querySelector(".help-about-extension").classList.add("active");
+});
+document.querySelector("#close-extension").addEventListener("click", ()=>{
+    document.querySelector(".help-about-extension").classList.remove("active");
+})

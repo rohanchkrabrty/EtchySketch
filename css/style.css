@@ -1,29 +1,31 @@
 html {
   box-sizing: border-box;
-}
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-}
-
-.container {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  height: 100vh;
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
   line-height: 20px;
 }
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+.container {
+  display: grid;
+  grid-template-columns: 262px 1fr;
+  height: 100vh;
+  z-index: 1;
+}
 .sidebar {
-  box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, 0.15);
   /*filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));*/
+  border-right: 2px solid #f3f3f3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   padding: 24px 24px 32px 32px;
+  background-color: #ffffff;
+  z-index: 3;
 }
 /*--------LIGHT DARK TOGGLE--------*/
 #toggleDark {
@@ -230,17 +232,42 @@ svg.IroBox {
   letter-spacing: -0.5px;
   text-decoration: none;
 }
-#help-about{
-  color: #EC5739;
+#help-about {
+  color: #ec5739;
 }
-#help-about:hover{
+#help-about:hover {
   color: #e0492b;
 }
-#clear-all{
+#clear-all {
   color: rgba(117, 117, 117, 0.6);
 }
-#clear-all:hover{
+#clear-all:hover {
   color: #757575;
+}
+/*--------HELP ABOUT EXTENSION--------*/
+.help-about-extension {
+  position: absolute;
+  top: 0;
+  /*extension width - sidebar width*/
+  left: -85px;
+  height: 100vh;
+  width: 340px;
+  box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+  transition: left 0.7s ease-out;
+}
+.help-about-extension.active {
+  left: 262px;
+}
+#close-extension{
+  width: 40px;
+  height: 40px;
+  background: #ffffff;
+  box-shadow: 4px 0px 48px rgba(0, 0, 0, 0.15);
+  border-radius: 50px;
+  color: #EC5739;
+  font-size: 24px;
+  line-height: 0;
 }
 /*--------COMMON--------*/
 .button {
