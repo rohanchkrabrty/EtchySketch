@@ -196,7 +196,7 @@ svg.IroBox {
   justify-content: space-between;
   margin-top: 24px;
   padding-top: 24px;
-  border-top: 1px dashed #D3D3D3;;
+  border-top: 1px dashed #d3d3d3;
 }
 #download-button {
   width: 120px;
@@ -216,6 +216,31 @@ svg.IroBox {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+/*--------MORE--------*/
+.more {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.more a {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: -0.5px;
+  text-decoration: none;
+}
+#help-about{
+  color: #EC5739;
+}
+#help-about:hover{
+  color: #e0492b;
+}
+#clear-all{
+  color: rgba(117, 117, 117, 0.6);
+}
+#clear-all:hover{
+  color: #757575;
 }
 /*--------COMMON--------*/
 .button {
