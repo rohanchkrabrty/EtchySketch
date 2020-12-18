@@ -1,7 +1,7 @@
 const SLIDER = document.querySelector(".slider");
 let activeColor, activeColorHex;
-activeColor = document.querySelector('#active-color');
-activeColorHex = document.querySelector('#hex');
+activeColor = document.querySelector("#active-color");
+activeColorHex = document.querySelector("#hex");
 
 document.querySelector(".tab .options").addEventListener("click", event => {
     //check if clicked tab is active or not
@@ -17,9 +17,9 @@ document.querySelector(".tab .options").addEventListener("click", event => {
 })
 
 //color picker
-const colorPicker = new iro.ColorPicker('.color-picker-box', {
+const colorPicker = new iro.ColorPicker(".color-picker-box", {
     width: 204,
-    color:'#EA9A39',
+    color:"#EA9A39",
     layout: [
         {
             component: iro.ui.Box,
@@ -31,7 +31,7 @@ const colorPicker = new iro.ColorPicker('.color-picker-box', {
             component: iro.ui.Slider,
             options: {
                 height: 14,
-                sliderType: 'hue',
+                sliderType: "hue",
                 sliderSize: 12
             }
         }
@@ -41,15 +41,14 @@ const colorPicker = new iro.ColorPicker('.color-picker-box', {
     margin:0,
     borderWidth: 0,
     handleRadius: 8,
-    handleSvg: '#color-picker-handle',
-    id: 'color-picker-iro'
+    handleSvg: "#color-picker-handle",
+    id: "color-picker-iro"
 });
-colorPicker.on('mount', (colorObject)=>{
-    updateActiveColor(colorObject.color);
+colorPicker.on(["mount","color:change"], updateActiveColor);
+activeColorHex.addEventListener("change", (e)=>{
+    colorPicker.color.hexString = e.target.value;
 });
-colorPicker.on('color:change', updateActiveColor);
-
-function updateActiveColor(color){
-    activeColor.style.backgroundColor = color.hexString;
-    activeColorHex.value = color.hexString;
+function updateActiveColor(){
+    activeColor.style.backgroundColor = colorPicker.color.hexString;
+    activeColorHex.value = colorPicker.color.hexString;
 }
