@@ -70,6 +70,7 @@ header h1 {
   letter-spacing: -1.5px;
   color: #212121;
   margin: 0;
+  margin-bottom: 8px;
 }
 .version {
   font-weight: 700;
@@ -78,12 +79,6 @@ header h1 {
   letter-spacing: -0.5px;
   color: #ec5739;
   padding-left: 12px;
-}
-.description {
-  width: 100%;
-  letter-spacing: -0.5px;
-  color: #757575;
-  margin: 0;
 }
 /*--------TAB--------*/
 .tab {
@@ -244,32 +239,111 @@ svg.IroBox {
 #clear-all:hover {
   color: #757575;
 }
-/*--------HELP ABOUT EXTENSION--------*/
-.help-about-extension {
+/*--------SIDEBAR EXTENSION--------*/
+.sidebar-extension {
   position: absolute;
   top: 0;
-  /*extension width - sidebar width*/
+  /*sidebar extension width - sidebar width*/
   left: -85px;
   height: 100vh;
   width: 340px;
+  padding: 32px 32px 56px;
   box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, 0.15);
   z-index: 2;
-  transition: left 0.7s ease-out;
+  transition: left 0.5s ease-out 0.3s;
+  background-image: url("/assets/tree_illustration.png");
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: bottom 0px right 40px;
+  background-size: 45.5%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
 }
-.help-about-extension.active {
-  left: 262px;
-}
-#close-extension{
+#close-extension {
+  position: absolute;
   width: 40px;
   height: 40px;
+  top: 16px;
+  /*sidebar extension width - (close button width / 2) */
+  left: 320px;
   background: #ffffff;
   box-shadow: 4px 0px 48px rgba(0, 0, 0, 0.15);
   border-radius: 50px;
-  color: #EC5739;
+  color: #ec5739;
   font-size: 24px;
   line-height: 0;
+  transform: scale(0) rotate(0deg);
+  transition: all 0.3s ease-out;
+}
+/*when sidebar is active*/
+.sidebar-extension.active {
+  transition: left 0.5s ease-out;
+  left: 262px;
+}
+.sidebar-extension.active #close-extension {
+  transform: scale(1) rotate(360deg);
+  transition: all 0.5s linear 0.1s;
+}
+section:not(.share){
+  margin-top: 16px;
+  margin-bottom: 40px;
+}
+section.share{
+  margin-top: auto;
+}
+.help p {
+  line-height: 30px;
+}
+.about p {
+  line-height: 24px;
+  margin-bottom: 10px;
+}
+.credit{
+  margin-top: 30px;
+}
+.about a {
+  color: #ec5739;
+  text-decoration: underline;
+}
+.about a:hover {
+  text-decoration: none;
+}
+.share-social-media {
+  display: flex;
+  flex-direction: row;
+  margin-top: 8px;
+}
+.share-social-media a {
+  margin-right: 15px;
+}
+.share-social-media a:hover {
+  filter: brightness(0.8);
+}
+.share-social-media img {
+  vertical-align: top;
+  width: 24px;
+  height: 24px;
 }
 /*--------COMMON--------*/
+h2 {
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 36px;
+  letter-spacing: -1.5px;
+  color: #212121;
+  margin: 0 0 8px 0;
+}
+p {
+  width: 100%;
+  letter-spacing: -0.5px;
+  color: #757575;
+  margin: 0;
+}
+strong {
+  font-weight: 600;
+  color: #212121;
+}
 .button {
   padding: 0;
   outline: none;
@@ -298,7 +372,6 @@ input[type="text"] {
   transition: background 150ms ease;
 }
 button:hover,
-button:focus,
 input[type="text"]:hover,
 input[type="text"]:focus,
 select:hover,

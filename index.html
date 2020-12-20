@@ -18,7 +18,7 @@
             <input type="checkbox" id="toggleDark">
             <header>
                 <h1>etchy<br>sketch<span class="version">1.0</span></h1>
-                <p class="description">A simple mosaic art generator on your browser.</p>
+                <p>A simple mosaic art generator on your browser.</p>
             </header>
             <div class="tab">
                 <ul class="options">
@@ -71,8 +71,35 @@
         <div class="canvas">
         </div>
     </main>
-    <aside class="help-about-extension">
+    <aside class="sidebar-extension">
         <button class="button" id="close-extension">×</button>
+        <section class="help">
+            <h2>help</h2>
+            <p><strong>Draw:</strong> Click on any block to start/end
+                <strong>Erase:</strong> Double Click on any filled block
+                <strong>Undo:</strong> Control + Z (Cmd + Z on Mac)
+                <strong>Redo:</strong> Control + Y (Cmd + Y on Mac)
+            </p>
+        </section>
+        <section class="about">
+            <h2>about this site</h2>
+            <p>This project is part of an assignment from <a
+                    href="https://www.theodinproject.com/courses/web-development-101/lessons/etch-a-sketch-project"
+                    target="_blank">The Odin Project</a>. The website is built using pure HTML, CSS and JS.</p>
+            <p><a href="https://iro.js.org" target="_blank">iro.js</a> was used to create the beautiful color picker.
+            </p>
+            <p class="credit">Developed by <a href="https://twitter.com/rohanchkrabrty" target="_blank">Rohan
+                    Chakraborty</a>. Designed by <a href="https://twitter.com/HckmstrRahul" target="_blank">Rahul
+                    Chakraborty</a>.</p>
+        </section>
+        <section class="share">
+            <p>Share this on:</p>
+            <div class="share-social-media">
+                <a href="https://twitter.com" target="_blank"><img src="assets/twitter.svg" alt="twitter"></a>
+                <a href="https://facebook.com" target="_blank"><img src="assets/facebook.svg" alt="facebook"></a>
+                <a href="https://linkedin.com" target="_blank"><img src="assets/linkedin.svg" alt="linkedin"></a>
+            </div>
+        </section>
     </aside>
     <script src="js/app.js"></script>
 </body>
