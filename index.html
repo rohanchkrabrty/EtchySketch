@@ -16,53 +16,58 @@
     <main class="container">
         <div class="sidebar">
             <input type="checkbox" id="toggleDark">
-            <header>
-                <h1>etchy<br>sketch<span class="version">1.0</span></h1>
-                <p>A simple mosaic art generator on your browser.</p>
-            </header>
-            <div class="tab">
-                <ul class="options">
-                    <li id="brush" class="active">Brush</li>
-                    <li id="shader">Shader</li>
-                </ul>
-                <div class="slider" role="presentation"></div>
-            </div>
-            <div class="grid-controls">
-                <div class="grid-counter">
-                    <button class="special button" id="grid-lines-decrease">-</button>
-                    <span id="grid-lines">27</span>
-                    <button class="special button" id="grid-lines-increase">+</button>
+            <section>
+                <header>
+                    <h1>etchy<br>sketch<span class="version">1.0</span></h1>
+                    <p>A simple mosaic art generator on your browser.</p>
+                </header>
+            </section>
+            <section>
+                <div class="tab">
+                    <ul class="options">
+                        <li id="brush" class="active">Brush</li>
+                        <li id="shader">Shader</li>
+                    </ul>
+                    <div class="slider" role="presentation"></div>
                 </div>
-                <button class="button" id="toggle-lines">eye</button>
-            </div>
-            <div class="color-picker">
-                <div class="color-picker-box">
-                    <svg style="width:0;height:0;">
-                        <defs>
-                            <filter id="color-picker-handle-dropshadow" y="-40%" height="180%" x="-40%" width="180%">
-                                <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="black"
-                                    flood-opacity="0.3" />
-                            </filter>
-                            <g id="color-picker-handle">
-                                <circle r="7" fill="none" stroke-width="5" stroke="#ffffff"></circle>
-                            </g>
-                        </defs>
-                    </svg>
+                <div class="grid-controls">
+                    <div class="grid-counter">
+                        <button class="special button" id="grid-lines-decrease">-</button>
+                        <span id="grid-lines">27</span>
+                        <button class="special button" id="grid-lines-increase">+</button>
+                    </div>
+                    <button class="button" id="toggle-lines">eye</button>
                 </div>
-                <div class="color-picker-controls">
-                    <button class="button" id="eye-dropper">asd</button>
-                    <input type="text" id="hex" value="#ffffff">
-                    <div id="active-color"></div>
+                <div class="color-picker">
+                    <div class="color-picker-box">
+                        <svg style="width:0;height:0;">
+                            <defs>
+                                <filter id="color-picker-handle-dropshadow" y="-40%" height="180%" x="-40%"
+                                    width="180%">
+                                    <feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="black"
+                                        flood-opacity="0.3" />
+                                </filter>
+                                <g id="color-picker-handle">
+                                    <circle r="7" fill="none" stroke-width="5" stroke="#ffffff"></circle>
+                                </g>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="color-picker-controls">
+                        <button class="button" id="eye-dropper">asd</button>
+                        <input type="text" id="hex" value="#ffffff">
+                        <div id="active-color"></div>
+                    </div>
                 </div>
-            </div>
-            <div class="download">
-                <button class="button" id="download-button">Download art</button>
-                <select id="download-options">
-                    <option value="png" selected>png</option>
-                    <option value="svg">svg</option>
-                    <option value="jpg">jpg</option>
-                </select>
-            </div>
+                <div class="download">
+                    <button class="button" id="download-button">Download art</button>
+                    <select id="download-options">
+                        <option value="png" selected>png</option>
+                        <option value="svg">svg</option>
+                        <option value="jpg">jpg</option>
+                    </select>
+                </div>
+            </section>
             <section class="more">
                 <a href="#" id="help-about">Help and About</a>
                 <a href="#" id="clear-all">Clear All</a>
