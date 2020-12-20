@@ -52,17 +52,21 @@ html {
   height: 22px;
   right: 4px;
   top: 2.5px;
-  background-color: rgb(255, 172, 51);
+  background-image: url("/assets/sun.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
   border-radius: 50%;
-  transition: all ease-in-out 0.2s;
+  transform: rotate(180deg);
+  transition: transform 0.4s ease-in-out, right 0.4s ease-in-out, background-image 170ms ease-in-out 170ms;
+  
 }
 #toggleDark:checked::before {
   right: 29px;
-  background-color: rgb(117, 117, 117);
-  transition: all ease-in-out 0.2s;
+  transform: rotate(360deg);
+  background-image: url("/assets/moon.svg");
 }
 /*--------HEADING--------*/
-section.heading{
+section.heading {
   margin-bottom: 40px;
 }
 header {
@@ -86,7 +90,7 @@ header h1 {
   padding-left: 12px;
 }
 /*--------UTILITIES--------*/
-.utilities > div:not(.download){
+.utilities > div:not(.download) {
   margin-bottom: 24px;
 }
 /*--------TAB--------*/
@@ -163,7 +167,7 @@ header h1 {
   height: 36px;
 }
 /*--------COLOR PICKER--------*/
-.color-picker-box{
+.color-picker-box {
   margin-bottom: 18px;
 }
 #color-picker-handle {
@@ -174,7 +178,7 @@ header h1 {
 #color-picker-iro {
   flex-flow: column nowrap;
 }
-#color-picker-iro svg{
+#color-picker-iro svg {
   cursor: pointer;
 }
 svg.IroBox {
@@ -298,11 +302,11 @@ svg.IroBox {
   transform: scale(1) rotate(360deg);
   transition: all 0.5s linear 0.1s;
 }
-.sidebar-extension section:not(.share){
+.sidebar-extension section:not(.share) {
   margin-top: 16px;
   margin-bottom: 40px;
 }
-.sidebar-extension section.share{
+.sidebar-extension section.share {
   margin-top: auto;
 }
 .help p {
@@ -312,7 +316,7 @@ svg.IroBox {
   line-height: 24px;
   margin-bottom: 10px;
 }
-.credit{
+.credit {
   margin-top: 30px;
 }
 .about a {
@@ -358,11 +362,11 @@ strong {
   color: #212121;
 }
 .button img,
-.button svg{
+.button svg {
   vertical-align: middle;
 }
 #toggle-lines svg,
-#eye-dropper svg{
+#eye-dropper svg {
   fill: #757575;
 }
 
