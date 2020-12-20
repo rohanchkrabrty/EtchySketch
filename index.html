@@ -16,13 +16,13 @@
     <main class="container">
         <div class="sidebar">
             <input type="checkbox" id="toggleDark">
-            <section>
+            <section class="heading">
                 <header>
                     <h1>etchy<br>sketch<span class="version">1.0</span></h1>
                     <p>A simple mosaic art generator on your browser.</p>
                 </header>
             </section>
-            <section>
+            <section class="utilities">
                 <div class="tab">
                     <ul class="options">
                         <li id="brush" class="active">Brush</li>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="color-picker">
                     <div class="color-picker-box">
-                        <svg style="width:0;height:0;">
+                        <svg style="width:0;height:0;position: absolute;top: -100px;">
                             <defs>
                                 <filter id="color-picker-handle-dropshadow" y="-40%" height="180%" x="-40%"
                                     width="180%">
