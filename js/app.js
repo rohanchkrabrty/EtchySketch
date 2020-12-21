@@ -54,7 +54,7 @@ function updateActiveColor(){
 }
 //-------------help about extension---------------
 document.querySelector("#help-about").addEventListener("click", ()=>{
-    document.querySelector(".sidebar-extension").classList.add("active");
+    document.querySelector(".sidebar-extension").classList.toggle("active");
 });
 document.querySelector("#close-extension").addEventListener("click", ()=>{
     document.querySelector(".sidebar-extension").classList.remove("active");
