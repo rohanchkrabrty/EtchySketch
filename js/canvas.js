@@ -1,5 +1,8 @@
 const gridCanvas = document.querySelector("#grid-canvas");
+const drawingCanvas = document.querySelector("#drawing-canvas");
 const gridCtx = gridCanvas.getContext("2d");
+const drawingCtx = drawingCanvas.getContext("2d");
+
 let gridLines = Number(document.querySelector("#grid-lines").innerText);
 let canvasWidth, cellWidth;
 
@@ -16,7 +19,11 @@ function initializeCanvas() {
     canvasWidth = cellWidth * gridLines;
     gridCanvas.width = canvasWidth;
     gridCanvas.height = canvasWidth;
+    drawingCanvas.width = canvasWidth;
+    drawingCanvas.height = canvasWidth;
 
+    clearCanvas(gridCtx, gridCanvas.width, gridCanvas.height);
+    clearCanvas(drawingCtx, drawingCanvas.width, drawingCanvas.height);
     drawGrid();
 }
 
@@ -38,7 +45,7 @@ function drawGrid() {
     gridCtx.stroke();
 }
 function clearCanvas(ctx, width, height) {
-    //TODO clear given canvas
+    ctx.clearRect(0,0,width,height);
 }
 initializeCanvas();
 
