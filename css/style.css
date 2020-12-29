@@ -380,7 +380,9 @@ strong {
 #eye-dropper svg {
   fill: #757575;
 }
-
+button > * {
+  pointer-events: none;
+}
 .button {
   padding: 0;
   outline: none;

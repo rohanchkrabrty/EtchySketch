@@ -1,6 +1,7 @@
 const gridCanvas = document.querySelector("#grid-canvas");
 const gridCtx = gridCanvas.getContext("2d");
-let gridLines, canvasWidth, cellWidth;
+let gridLines = Number(document.querySelector("#grid-lines").innerText);
+let canvasWidth, cellWidth;
 
 function initializeCanvas() {
     /*
@@ -9,14 +10,13 @@ function initializeCanvas() {
     * Also we need to make sure that the canvas width is equally divided into cols and rows, to prevent fractional grid lines.
     TODO : fix for retina display
     */
-    gridLines = Number(document.querySelector("#grid-lines").innerText);
     canvasWidth = (Math.min(document.querySelector(".canvas-container").clientHeight, document.querySelector(".canvas-container").clientWidth) - 50);
     cellWidth = Math.floor(canvasWidth / gridLines);
     //changing canvas width to keep everything in whole numbers
     canvasWidth = cellWidth * gridLines;
     gridCanvas.width = canvasWidth;
     gridCanvas.height = canvasWidth;
-    
+
     drawGrid();
 }
 
@@ -41,3 +41,14 @@ function clearCanvas(ctx, width, height) {
     //TODO clear given canvas
 }
 initializeCanvas();
+
+document.querySelector(".grid-controls").addEventListener("click", event => {
+    if (event.target.tagName == "BUTTON") {
+        if (event.target.id.includes("increase") && gridLines < 99)
+            gridLines++;
+        else if (event.target.id.includes("decrease") && gridLines > 2)
+            gridLines--;
+        document.querySelector("#grid-lines").innerText = gridLines;
+        initializeCanvas();
+    }
+});
