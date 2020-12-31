@@ -83,7 +83,9 @@ document.querySelector("#grid-canvas").addEventListener("dblclick", e => {
     drawingCtx.clearRect(currentCell.left, currentCell.top, cellWidth, cellWidth);
 });
 //canvas drawing
-document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
+//document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
+document.querySelector("#grid-canvas").addEventListener("mousedown", () => paintingMode = true);
+document.querySelector("#grid-canvas").addEventListener("mouseup", () => paintingMode = false);
 document.querySelector("#grid-canvas").addEventListener("mousemove", e => {
     if (paintingMode) {
         drawingCtx.fillStyle = document.querySelector("#active-color").style.backgroundColor;
