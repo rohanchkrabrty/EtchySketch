@@ -74,10 +74,14 @@ document.querySelector(".grid-controls").addEventListener("click", event => {
     }
 });
 //canvas clearAll i.e. clear drawing canvas
-document.querySelector("#clear-all").addEventListener("click", ()=>{
+document.querySelector("#clear-all").addEventListener("click", () => {
     clearCanvas(drawingCtx, drawingCanvas.width, drawingCanvas.height);
 });
-
+//double click to erase
+document.querySelector("#grid-canvas").addEventListener("dblclick", e => {
+    let currentCell = getCurrentCell(e);
+    drawingCtx.clearRect(currentCell.left, currentCell.top, cellWidth, cellWidth);
+});
 //canvas drawing
 document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
 document.querySelector("#grid-canvas").addEventListener("mousemove", e => {
