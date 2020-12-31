@@ -38,8 +38,7 @@ function initializeCanvas() {
 
 function drawGrid() {
     //TODO: clean canvas then draw
-    //gridCtx.strokeStyle = "#a2a2a2";
-    gridCtx.strokeStyle = "black";
+    gridCtx.strokeStyle = "#3a3a3a";
     gridCtx.lineWidth = 1;
     gridCtx.beginPath();
     //drawing vertical lines
