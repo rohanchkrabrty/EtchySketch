@@ -60,6 +60,7 @@ function clearCanvas(ctx, width, height) {
 }
 initializeCanvas();
 
+//canvas grid lines increase/derease
 document.querySelector(".grid-controls").addEventListener("click", event => {
     if (event.target.tagName == "BUTTON" && event.target.id.includes("grid-lines")) {
         if (event.target.id.includes("increase") && gridLines < 99)
@@ -72,6 +73,11 @@ document.querySelector(".grid-controls").addEventListener("click", event => {
         gridCanvas.classList.toggle("active");
     }
 });
+//canvas clearAll i.e. clear drawing canvas
+document.querySelector("#clear-all").addEventListener("click", ()=>{
+    clearCanvas(drawingCtx, drawingCanvas.width, drawingCanvas.height);
+});
+
 //canvas drawing
 document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
 document.querySelector("#grid-canvas").addEventListener("mousemove", e => {
