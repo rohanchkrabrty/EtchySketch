@@ -26,12 +26,16 @@ html {
   position: relative;
 }
 canvas {
-  border: 2px solid #757575;
+  border: 1.5px solid #a2a2a2;
   border-radius: 8px;
 }
 canvas#grid-canvas{
   position: absolute;
   z-index: 2;
+  opacity: 0;
+}
+canvas#grid-canvas.active{
+  opacity: 1;
 }
 /*--------SIDEBAR--------*/
 .sidebar {

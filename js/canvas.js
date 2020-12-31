@@ -2,6 +2,7 @@ const gridCanvas = document.querySelector("#grid-canvas");
 const drawingCanvas = document.querySelector("#drawing-canvas");
 const gridCtx = gridCanvas.getContext("2d");
 const drawingCtx = drawingCanvas.getContext("2d");
+let paintingMode = false;
 
 let gridLines = Number(document.querySelector("#grid-lines").innerText);
 let canvasWidth, cellWidth;
@@ -17,6 +18,14 @@ function initializeCanvas() {
     cellWidth = Math.floor(canvasWidth / gridLines);
     //changing canvas width to keep everything in whole numbers
     canvasWidth = cellWidth * gridLines;
+    gridCanvas.style.width = canvasWidth + "px";
+    gridCanvas.style.height = canvasWidth + "px";
+    drawingCanvas.style.width = canvasWidth + "px";
+    drawingCanvas.style.height = canvasWidth + "px";
+
+    cellWidth = Math.floor((canvasWidth * 1) / gridLines);
+    //changing canvas width to keep everything in whole numbers
+    canvasWidth = cellWidth * gridLines;
     gridCanvas.width = canvasWidth;
     gridCanvas.height = canvasWidth;
     drawingCanvas.width = canvasWidth;
@@ -29,6 +38,7 @@ function initializeCanvas() {
 
 function drawGrid() {
     //TODO: clean canvas then draw
+    //gridCtx.strokeStyle = "#a2a2a2";
     gridCtx.strokeStyle = "black";
     gridCtx.lineWidth = 1;
     gridCtx.beginPath();
@@ -44,18 +54,38 @@ function drawGrid() {
     }
     gridCtx.stroke();
 }
+
 function clearCanvas(ctx, width, height) {
-    ctx.clearRect(0,0,width,height);
+    ctx.clearRect(0, 0, width, height);
 }
 initializeCanvas();
 
 document.querySelector(".grid-controls").addEventListener("click", event => {
-    if (event.target.tagName == "BUTTON") {
+    if (event.target.tagName == "BUTTON" && event.target.id.includes("grid-lines")) {
         if (event.target.id.includes("increase") && gridLines < 99)
             gridLines++;
         else if (event.target.id.includes("decrease") && gridLines > 2)
             gridLines--;
         document.querySelector("#grid-lines").innerText = gridLines;
         initializeCanvas();
+    } else if (event.target.tagName == "BUTTON" && event.target.id.includes("toggle-lines")) {
+        gridCanvas.classList.toggle("active");
     }
 });
+//canvas drawing
+document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
+document.querySelector("#grid-canvas").addEventListener("mousemove", e => {
+    if (paintingMode) {
+        drawingCtx.fillStyle = document.querySelector("#active-color").style.backgroundColor;
+        let currentCell = getCurrentCell(e);
+        drawingCtx.fillRect(currentCell.left, currentCell.top, cellWidth, cellWidth);
+    }
+});
+function getCurrentCell(e) {
+    //returns current canvas cell index
+    let rect = gridCanvas.getBoundingClientRect();
+    return {
+        left: Math.floor((e.clientX - rect.left) / cellWidth) * cellWidth,
+        top: Math.floor((e.clientY - rect.top) / cellWidth) * cellWidth
+    }
+}
