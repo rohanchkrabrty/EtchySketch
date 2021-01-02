@@ -34,9 +34,17 @@ export function clearCanvas(ctx, width, height) {
 
 export function getCurrentCell(canvas, x, y, cellWidth, cellHeight) {
     //returns current canvas cell index from input mouse postion
+    let mousePos = getCanvasMousePosition(canvas, x, y);
+    return {
+        x: Math.floor(mousePos.x / cellWidth) * cellWidth,
+        y: Math.floor(mousePos.y / cellHeight) * cellHeight
+    }
+}
+export function getCanvasMousePosition(canvas, x, y) {
+    //returns mouse position with respect to canvas
     let rect = canvas.getBoundingClientRect();
     return {
-        x: Math.floor((x - rect.left) / cellWidth) * cellWidth,
-        y: Math.floor((y - rect.top) / cellHeight) * cellHeight
+        x: (x - rect.left),
+        y: (y - rect.top)
     }
 }
