@@ -33,9 +33,13 @@ canvas#grid-canvas{
   position: absolute;
   z-index: 2;
   opacity: 0;
+  cursor: default;
 }
 canvas#grid-canvas.active{
   opacity: 1;
+}
+canvas#grid-canvas.color-picker-mode{
+  cursor: crosshair;
 }
 /*--------SIDEBAR--------*/
 .sidebar {

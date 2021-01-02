@@ -1,102 +1,42 @@
-const gridCanvas = document.querySelector("#grid-canvas");
-const drawingCanvas = document.querySelector("#drawing-canvas");
-const gridCtx = gridCanvas.getContext("2d");
-const drawingCtx = drawingCanvas.getContext("2d");
-let paintingMode = false;
-
-let gridLines = Number(document.querySelector("#grid-lines").innerText);
-let canvasWidth, cellWidth;
-
-function initializeCanvas() {
-    /*
-    * Since Canvas is square, we need to take the min value of the container to prevent overflow and keep canvas centered 
-    * canvas width == canvas container width or height ( whichever is smaller ) - 50(padding) 
-    * Also we need to make sure that the canvas width is equally divided into cols and rows, to prevent fractional grid lines.
-    TODO : fix for retina display
-    */
-    canvasWidth = (Math.min(document.querySelector(".canvas-container").clientHeight, document.querySelector(".canvas-container").clientWidth) - 50);
-    cellWidth = Math.floor(canvasWidth / gridLines);
-    //changing canvas width to keep everything in whole numbers
-    canvasWidth = cellWidth * gridLines;
-    gridCanvas.style.width = canvasWidth + "px";
-    gridCanvas.style.height = canvasWidth + "px";
-    drawingCanvas.style.width = canvasWidth + "px";
-    drawingCanvas.style.height = canvasWidth + "px";
-
-    cellWidth = Math.floor((canvasWidth * 1) / gridLines);
-    //changing canvas width to keep everything in whole numbers
-    canvasWidth = cellWidth * gridLines;
-    gridCanvas.width = canvasWidth;
-    gridCanvas.height = canvasWidth;
-    drawingCanvas.width = canvasWidth;
-    drawingCanvas.height = canvasWidth;
-
-    clearCanvas(gridCtx, gridCanvas.width, gridCanvas.height);
-    clearCanvas(drawingCtx, drawingCanvas.width, drawingCanvas.height);
-    drawGrid();
+export function resizeCanvas(canvas, width, height, scale = 1) {
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
+    canvas.width = width * scale;
+    canvas.height = height * scale;
 }
-
-function drawGrid() {
-    //TODO: clean canvas then draw
-    gridCtx.strokeStyle = "#3a3a3a";
-    gridCtx.lineWidth = 1;
-    gridCtx.beginPath();
+export function drawGrid(ctx, width, height, cellWidth, cellHeight, gridLines, color) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
     //drawing vertical lines
     for (let i = 1; i < gridLines; i++) {
-        gridCtx.moveTo(cellWidth * i + 0.5, 0);
-        gridCtx.lineTo(cellWidth * i + 0.5, gridCanvas.height);
+        ctx.moveTo(cellWidth * i + 0.5, 0);
+        ctx.lineTo(cellWidth * i + 0.5, height);
     }
     //drawing horizontal lines
     for (let i = 1; i < gridLines; i++) {
-        gridCtx.moveTo(0, cellWidth * i + 0.5);
-        gridCtx.lineTo(gridCanvas.width, cellWidth * i + 0.5);
+        ctx.moveTo(0, cellHeight * i + 0.5);
+        ctx.lineTo(width, cellHeight * i + 0.5);
     }
-    gridCtx.stroke();
+    ctx.stroke();
 }
-
-function clearCanvas(ctx, width, height) {
+export function drawCell(ctx, x, y, cellWidth, cellHeight, color) {
+    //draws a filled cell of cellWidth x cellHeight with given color
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, cellWidth, cellHeight);
+}
+export function clearCell(ctx, x, y, cellWidth, cellHeight) {
+    ctx.clearRect(x, y, cellWidth, cellHeight);
+}
+export function clearCanvas(ctx, width, height) {
     ctx.clearRect(0, 0, width, height);
 }
-initializeCanvas();
 
-//canvas grid lines increase/derease
-document.querySelector(".grid-controls").addEventListener("click", event => {
-    if (event.target.tagName == "BUTTON" && event.target.id.includes("grid-lines")) {
-        if (event.target.id.includes("increase") && gridLines < 99)
-            gridLines++;
-        else if (event.target.id.includes("decrease") && gridLines > 2)
-            gridLines--;
-        document.querySelector("#grid-lines").innerText = gridLines;
-        initializeCanvas();
-    } else if (event.target.tagName == "BUTTON" && event.target.id.includes("toggle-lines")) {
-        gridCanvas.classList.toggle("active");
-    }
-});
-//canvas clearAll i.e. clear drawing canvas
-document.querySelector("#clear-all").addEventListener("click", () => {
-    clearCanvas(drawingCtx, drawingCanvas.width, drawingCanvas.height);
-});
-//double click to erase
-document.querySelector("#grid-canvas").addEventListener("dblclick", e => {
-    let currentCell = getCurrentCell(e);
-    drawingCtx.clearRect(currentCell.left, currentCell.top, cellWidth, cellWidth);
-});
-//canvas drawing
-//document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
-document.querySelector("#grid-canvas").addEventListener("mousedown", () => paintingMode = true);
-document.querySelector("#grid-canvas").addEventListener("mouseup", () => paintingMode = false);
-document.querySelector("#grid-canvas").addEventListener("mousemove", e => {
-    if (paintingMode) {
-        drawingCtx.fillStyle = document.querySelector("#active-color").style.backgroundColor;
-        let currentCell = getCurrentCell(e);
-        drawingCtx.fillRect(currentCell.left, currentCell.top, cellWidth, cellWidth);
-    }
-});
-function getCurrentCell(e) {
-    //returns current canvas cell index
-    let rect = gridCanvas.getBoundingClientRect();
+export function getCurrentCell(canvas, x, y, cellWidth, cellHeight) {
+    //returns current canvas cell index from input mouse postion
+    let rect = canvas.getBoundingClientRect();
     return {
-        left: Math.floor((e.clientX - rect.left) / cellWidth) * cellWidth,
-        top: Math.floor((e.clientY - rect.top) / cellWidth) * cellWidth
+        x: Math.floor((x - rect.left) / cellWidth) * cellWidth,
+        y: Math.floor((y - rect.top) / cellHeight) * cellHeight
     }
 }
