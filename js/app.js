@@ -129,7 +129,8 @@ so that when mouse is released outside canvas, drawingMode is still turned off*/
 document.documentElement.addEventListener("mouseup", () => paintingMode = false);
 gridCanvas.addEventListener("mousemove", e => {
     if (colorPickerMode) {
-
+        let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
+        activeColor.style.backgroundColor= canvas.getPixelColor(drawingCanvas.ctx,mousePos.x,mousePos.y);
     }
     else if (paintingMode) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
@@ -141,11 +142,14 @@ gridCanvas.addEventListener("mousemove", e => {
 document.querySelector("#eye-dropper").addEventListener("click", () => {
     colorPickerMode = !colorPickerMode;
     gridCanvas.classList.toggle("color-picker-mode");
+    updateActiveColor();
 });
-gridCanvas.addEventListener("click", () =>{
+gridCanvas.addEventListener("click", (e) =>{
     if(colorPickerMode){
         colorPickerMode = false;
         gridCanvas.classList.remove("color-picker-mode");
         //get color
+        let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
+        colorPicker.color.rgbaString = canvas.getPixelColor(drawingCanvas.ctx,mousePos.x,mousePos.y);
     }
 });

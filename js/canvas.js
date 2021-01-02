@@ -48,3 +48,7 @@ export function getCanvasMousePosition(canvas, x, y) {
         y: (y - rect.top)
     }
 }
+export function getPixelColor(ctx, x, y) {
+    let imageData = ctx.getImageData(x, y, 1, 1).data;
+    return `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, ${imageData[3] / 255})`;
+}
