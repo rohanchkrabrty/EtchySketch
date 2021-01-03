@@ -1,3 +1,6 @@
+let undoStack = new Array();
+let redoStack = new Array();
+
 export function resizeCanvas(canvas, width, height, scale = 1) {
     canvas.style.width = width + "px";
     canvas.style.height = height + "px";
@@ -49,6 +52,40 @@ export function getCanvasMousePosition(canvas, x, y) {
     }
 }
 export function getPixelColor(ctx, x, y) {
-    let imageData = ctx.getImageData(x, y, 1, 1).data;
-    return `rgba(${imageData[0]}, ${imageData[1]}, ${imageData[2]}, ${imageData[3] / 255})`;
+    let pixelData = ctx.getImageData(x, y, 1, 1).data;
+    return `rgba(${pixelData[0]}, ${pixelData[1]}, ${pixelData[2]}, ${pixelData[3] / 255})`;
+}
+export function save(ctx, width, height) {
+    //saves the canvas state i.e adds to the undostack
+    let currentCanvasData = ctx.getImageData(0, 0, width, height);
+    undoStack.push(currentCanvasData);
+    //clear redoStack
+    redoStack.length = 0;
+    console.log("canvas saved");
+}
+export function undo(ctx) {
+    //undo the canvas if undoStack not empty
+    if (undoStack.length) {
+        //push currentData to redoStack
+        let currentCanvasData = undoStack.pop();
+        redoStack.push(currentCanvasData);
+
+        let undoCanvasData = undoStack[undoStack.length - 1];
+        ctx.putImageData(undoCanvasData, 0, 0);
+        //console.log("undo");
+    }
+}
+export function redo(ctx) {
+    //redo the canvas if redoStack not empty
+    if (redoStack.length) {
+        let redoCanvasData = redoStack.pop();
+        ctx.putImageData(redoCanvasData, 0, 0);
+        //push redoCanvasData to undoStack
+        undoStack.push(redoCanvasData);
+        //console.log("redo");
+    }
+}
+export function log() {
+    console.log(undoStack);
+    console.log(redoStack);
 }
