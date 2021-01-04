@@ -171,19 +171,9 @@ document.querySelector("#eye-dropper").addEventListener("click", () => {
     gridCanvas.classList.toggle("color-picker-mode");
     updateActiveColor();
 });
-/*gridCanvas.addEventListener("click", (e) => {
-    if (colorPickerMode) {
-        colorPickerMode = false;
-        gridCanvas.classList.remove("color-picker-mode");
-        //get color
-        let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
-        colorPicker.color.rgbaString = canvas.getPixelColor(drawingCanvas.ctx, mousePos.x, mousePos.y);
-    }
-});*/
 
 //keyboard listeners
 document.addEventListener("keydown", e => {
-    console.log(e.key);
     //undo listener CTRL + Z
     if ((e.ctrlKey || e.metaKey) && e.key == "z") {
         canvas.undo(drawingCanvas.ctx);
