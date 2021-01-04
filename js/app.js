@@ -124,7 +124,7 @@ gridCanvas.addEventListener("contextmenu", e => e.preventDefault());
 //canvas draw and erase
 gridCanvas.addEventListener("mousedown", e => {
     if (!colorPickerMode) {
-        if (e.ctrlKey)
+        if (e.ctrlKey || e.metaKey)
             eraserMode = true;
         else
             paintingMode = true;
@@ -159,7 +159,7 @@ gridCanvas.addEventListener("mousemove", e => {
     } else if (paintingMode) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
-    } else if (eraserMode && e.ctrlKey) {
+    } else if (eraserMode && (e.ctrlKey || e.metaKey)) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
     }
@@ -183,12 +183,13 @@ document.querySelector("#eye-dropper").addEventListener("click", () => {
 
 //keyboard listeners
 document.addEventListener("keydown", e => {
+    console.log(e.key);
     //undo listener CTRL + Z
-    if (e.ctrlKey && e.key == "z") {
+    if ((e.ctrlKey || e.metaKey) && e.key == "z") {
         canvas.undo(drawingCanvas.ctx);
     }
     //redo listener CTRL + Y
-    else if (e.ctrlKey && e.key == "y") {
+    else if ((e.ctrlKey || e.metaKey) && e.key == "y") {
         canvas.redo(drawingCanvas.ctx);
     }
 });
