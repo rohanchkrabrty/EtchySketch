@@ -77,6 +77,7 @@ let gridLines, canvasSize, cellSize;
 gridLines = Number(gridLinesElement.innerText);
 let paintingMode = false;
 let colorPickerMode = false;
+let eraserMode = false;
 function initializeCanvas() {
     /*
     * Since Canvas is square, we need to take the min value of the container to prevent overflow and keep canvas centered 
@@ -117,20 +118,27 @@ document.querySelector(".grid-controls").addEventListener("click", event => {
 document.querySelector("#clear-all").addEventListener("click", () => {
     canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
 });
-//double click to erase
-gridCanvas.addEventListener("dblclick", e => {
-    let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
-    canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
-    canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
+//remove right click context menu
+gridCanvas.addEventListener("contextmenu", e => e.preventDefault());
+
+//canvas draw and erase
+gridCanvas.addEventListener("mousedown", e => {
+    if (e.button == 0)
+        paintingMode = true;
+    else if (e.button == 2) {
+        eraserMode = true;
+    }
 });
-//canvas drawing
-//document.querySelector("#grid-canvas").addEventListener("click", () => paintingMode = !paintingMode);
-gridCanvas.addEventListener("mousedown", () => paintingMode = true);
-/*listening for mouseup on documentElement
-so that when mouse is released outside canvas, drawingMode is still turned off*/
-document.addEventListener("mouseup", () => {
+document.addEventListener("mouseup", e => {
     if (paintingMode) {
         paintingMode = false;
+        let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
+        canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
+        canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
+    } else if (eraserMode) {
+        eraserMode = false;
+        let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
+        canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
         canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
     }
 });
@@ -138,10 +146,12 @@ gridCanvas.addEventListener("mousemove", e => {
     if (colorPickerMode) {
         let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
         activeColor.style.backgroundColor = canvas.getPixelColor(drawingCanvas.ctx, mousePos.x, mousePos.y);
-    }
-    else if (paintingMode) {
+    } else if (paintingMode) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
+    } else if (eraserMode) {
+        let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
+        canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
     }
 });
 
@@ -164,14 +174,14 @@ gridCanvas.addEventListener("click", (e) => {
 //keyboard listeners
 document.addEventListener("keydown", e => {
     //undo listener CTRL + Z
-    if(e.ctrlKey && e.key == "z"){
+    if (e.ctrlKey && e.key == "z") {
         canvas.undo(drawingCanvas.ctx);
     }
     //redo listener CTRL + Y
-    else if(e.ctrlKey && e.key == "y"){
+    else if (e.ctrlKey && e.key == "y") {
         canvas.redo(drawingCanvas.ctx);
     }
-    else if(e.key == "l"){
+    else if (e.key == "l") {
         canvas.log();
     }
 });
