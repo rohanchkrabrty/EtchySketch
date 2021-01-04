@@ -123,14 +123,24 @@ gridCanvas.addEventListener("contextmenu", e => e.preventDefault());
 
 //canvas draw and erase
 gridCanvas.addEventListener("mousedown", e => {
-    if (e.button == 0)
-        paintingMode = true;
-    else if (e.button == 2) {
-        eraserMode = true;
+    if (!colorPickerMode) {
+        if (e.ctrlKey)
+            eraserMode = true;
+        else
+            paintingMode = true;
     }
 });
 document.addEventListener("mouseup", e => {
-    if (paintingMode) {
+    if (colorPickerMode) {
+        //update color if mouse cursor is on canvas
+        let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
+        if (mousePos.x > 0 && mousePos.y > 0) {
+            colorPickerMode = false;
+            gridCanvas.classList.remove("color-picker-mode");
+            colorPicker.color.rgbaString = canvas.getPixelColor(drawingCanvas.ctx, mousePos.x, mousePos.y);
+            updateActiveColor();
+        }
+    } else if (paintingMode) {
         paintingMode = false;
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
@@ -149,7 +159,7 @@ gridCanvas.addEventListener("mousemove", e => {
     } else if (paintingMode) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
-    } else if (eraserMode) {
+    } else if (eraserMode && e.ctrlKey) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
     }
@@ -161,7 +171,7 @@ document.querySelector("#eye-dropper").addEventListener("click", () => {
     gridCanvas.classList.toggle("color-picker-mode");
     updateActiveColor();
 });
-gridCanvas.addEventListener("click", (e) => {
+/*gridCanvas.addEventListener("click", (e) => {
     if (colorPickerMode) {
         colorPickerMode = false;
         gridCanvas.classList.remove("color-picker-mode");
@@ -169,7 +179,7 @@ gridCanvas.addEventListener("click", (e) => {
         let mousePos = canvas.getCanvasMousePosition(gridCanvas, e.clientX, e.clientY);
         colorPicker.color.rgbaString = canvas.getPixelColor(drawingCanvas.ctx, mousePos.x, mousePos.y);
     }
-});
+});*/
 
 //keyboard listeners
 document.addEventListener("keydown", e => {
@@ -180,8 +190,5 @@ document.addEventListener("keydown", e => {
     //redo listener CTRL + Y
     else if (e.ctrlKey && e.key == "y") {
         canvas.redo(drawingCanvas.ctx);
-    }
-    else if (e.key == "l") {
-        canvas.log();
     }
 });
