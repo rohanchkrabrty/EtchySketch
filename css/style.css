@@ -302,6 +302,20 @@ svg.IroBox {
   flex-flow: column nowrap;
   justify-content: flex-start;
 }
+.sidebar-extension section{
+  opacity: 0;
+  transition: opacity 0.4s ease-out 0.3s;
+}
+/*when sidebar is active*/
+.sidebar-extension.active {
+  transition: left 0.5s ease-out;
+  left: 262px;
+  opacity: 1;
+}
+.sidebar-extension.active section{
+  opacity: 1;
+  transition: opacity 1.2s ease-out;
+}
 #close-extension {
   position: absolute;
   width: 40px;
@@ -317,11 +331,6 @@ svg.IroBox {
   line-height: 0;
   transform: scale(0) rotate(0deg);
   transition: all 0.3s ease-out;
-}
-/*when sidebar is active*/
-.sidebar-extension.active {
-  transition: left 0.5s ease-out;
-  left: 262px;
 }
 .sidebar-extension.active #close-extension {
   transform: scale(1) rotate(360deg);
