@@ -8,6 +8,10 @@ activeColor = document.querySelector("#active-color");
 activeColorHex = document.querySelector("#hex");
 
 
+//-----------------popup module-------------
+document.querySelector(".popup-module button").addEventListener("click", () => {
+    document.querySelector(".popup-module").classList.remove("active");
+});
 document.querySelector(".tab .options").addEventListener("click", event => {
     //check if clicked tab is active or not
     if (!event.target.classList.contains("active") && event.target.tagName == "LI") {
@@ -78,6 +82,11 @@ gridLines = Number(gridLinesElement.innerText);
 let paintingMode = false;
 let colorPickerMode = false;
 let eraserMode = false;
+let shaderMode = false;
+let previousCell = {
+    x: -1,
+    y: -1
+};
 function initializeCanvas() {
     /*
     * Since Canvas is square, we need to take the min value of the container to prevent overflow and keep canvas centered 
@@ -95,29 +104,23 @@ function initializeCanvas() {
     canvas.clearCanvas(gridCanvas.ctx, canvasSize, canvasSize);
     canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
     canvas.drawGrid(gridCanvas.ctx, canvasSize, canvasSize, cellSize, cellSize, gridLines);
+    //fix for a shader + colopicker issue -  so filling the canvas with color
+    drawingCanvas.ctx.fillStyle = "#ffffff";
+    drawingCanvas.ctx.fillRect(0, 0, canvasSize, canvasSize);
     canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
 }
 
-initializeCanvas();
-
-//canvas grid lines increase/derease
-document.querySelector(".grid-controls").addEventListener("click", event => {
-    if (event.target.tagName == "BUTTON" && event.target.id.includes("grid-lines")) {
-        if (event.target.id.includes("increase") && gridLines < 99)
-            gridLines++;
-        else if (event.target.id.includes("decrease") && gridLines > 2)
-            gridLines--;
-        gridLinesElement.innerText = gridLines;
-        initializeCanvas();
-    } else if (event.target.tagName == "BUTTON" && event.target.id.includes("toggle-lines")) {
-        gridCanvas.classList.toggle("active");
-    }
+//color picker
+document.querySelector("#eye-dropper").addEventListener("click", () => {
+    colorPickerMode = !colorPickerMode;
+    gridCanvas.classList.toggle("color-picker-mode");
+    updateActiveColor();
 });
 
-//canvas clearAll i.e. clear drawing canvas
-document.querySelector("#clear-all").addEventListener("click", () => {
-    canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
-});
+//shader
+document.querySelector("#shader").addEventListener("click", () => shaderMode = true);
+document.querySelector("#brush").addEventListener("click", () => shaderMode = false);
+
 //remove right click context menu
 gridCanvas.addEventListener("contextmenu", e => e.preventDefault());
 
@@ -143,12 +146,15 @@ document.addEventListener("mouseup", e => {
     } else if (paintingMode) {
         paintingMode = false;
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
-        canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
+        if (shaderMode)
+            canvas.drawCell(drawingCanvas.ctx, currentCell, cellSize, cellSize, "#000000", 0.1);
+        else
+            canvas.drawCell(drawingCanvas.ctx, currentCell, cellSize, cellSize, activeColorHex.value);
         canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
     } else if (eraserMode) {
         eraserMode = false;
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
-        canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
+        canvas.clearCell(drawingCanvas.ctx, currentCell, cellSize, cellSize);
         canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
     }
 });
@@ -158,20 +164,39 @@ gridCanvas.addEventListener("mousemove", e => {
         activeColor.style.backgroundColor = canvas.getPixelColor(drawingCanvas.ctx, mousePos.x, mousePos.y);
     } else if (paintingMode) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
-        canvas.drawCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize, activeColorHex.value);
+        if (shaderMode) {
+            if (currentCell.x === previousCell.x && currentCell.y === previousCell.y);
+            else{
+                canvas.drawCell(drawingCanvas.ctx, currentCell, cellSize, cellSize, "#000000", 0.1);
+                previousCell.x = currentCell.x;
+                previousCell.y = currentCell.y;
+            }
+        }
+        else
+            canvas.drawCell(drawingCanvas.ctx, currentCell, cellSize, cellSize, activeColorHex.value);
     } else if (eraserMode && (e.ctrlKey || e.metaKey)) {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
-        canvas.clearCell(drawingCanvas.ctx, currentCell.x, currentCell.y, cellSize, cellSize);
+        canvas.clearCell(drawingCanvas.ctx, currentCell, cellSize, cellSize);
+    }
+});
+//canvas grid lines increase/derease
+document.querySelector(".grid-controls").addEventListener("click", event => {
+    if (event.target.tagName == "BUTTON" && event.target.id.includes("grid-lines")) {
+        if (event.target.id.includes("increase") && gridLines < 99)
+            gridLines++;
+        else if (event.target.id.includes("decrease") && gridLines > 2)
+            gridLines--;
+        gridLinesElement.innerText = gridLines;
+        initializeCanvas();
+    } else if (event.target.tagName == "BUTTON" && event.target.id.includes("toggle-lines")) {
+        gridCanvas.classList.toggle("active");
     }
 });
 
-//color picker
-document.querySelector("#eye-dropper").addEventListener("click", () => {
-    colorPickerMode = !colorPickerMode;
-    gridCanvas.classList.toggle("color-picker-mode");
-    updateActiveColor();
+//canvas clearAll i.e. clear drawing canvas
+document.querySelector("#clear-all").addEventListener("click", () => {
+    canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
 });
-
 //keyboard listeners
 document.addEventListener("keydown", e => {
     //undo listener CTRL + Z
@@ -182,4 +207,9 @@ document.addEventListener("keydown", e => {
     else if ((e.ctrlKey || e.metaKey) && e.key == "y") {
         canvas.redo(drawingCanvas.ctx);
     }
+});
+
+window.addEventListener("load",()=>{
+    initializeCanvas();
+    document.querySelector(".popup-module").classList.add("active");
 });

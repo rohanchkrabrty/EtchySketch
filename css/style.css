@@ -29,16 +29,16 @@ canvas {
   border: 1.5px solid #3a3a3a;
   border-radius: 8px;
 }
-canvas#grid-canvas{
+canvas#grid-canvas {
   position: absolute;
   z-index: 2;
   opacity: 0;
   cursor: default;
 }
-canvas#grid-canvas.active{
+canvas#grid-canvas.active {
   opacity: 1;
 }
-canvas#grid-canvas.color-picker-mode{
+canvas#grid-canvas.color-picker-mode {
   cursor: crosshair;
 }
 /*--------SIDEBAR--------*/
@@ -366,6 +366,50 @@ svg.IroBox {
   vertical-align: top;
   width: 24px;
   height: 24px;
+}
+/*--------POPUP MODULE--------*/
+.popup-module {
+  position: absolute;
+  top: -100px;
+  z-index: 3;
+  width: 324px;
+  height: 92px;
+  background: #ffffff;
+  box-shadow: 4px 0px 56px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  opacity: 0;
+  transition: all 1s ease-in-out;
+}
+.popup-module.active{
+  top: 54px;
+  opacity: 1;
+  transition: all 1s 0.2s ease-in-out;
+}
+.popup-module img {
+  width: 61px;
+  height: 103px;
+  margin-right: 12px;
+  position: relative;
+  top: calc(-16px - 23px);
+}
+.popup-module .text{
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: end;
+}
+.popup-module h2,
+.popup-module .button {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 20px;
+  letter-spacing: -1px;
+  margin: 0;
+}
+.popup-module .button{
+  background: none;
+  color: #ec5739;
 }
 /*--------COMMON--------*/
 h2 {

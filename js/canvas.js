@@ -23,13 +23,14 @@ export function drawGrid(ctx, width, height, cellWidth, cellHeight, gridLines, c
     }
     ctx.stroke();
 }
-export function drawCell(ctx, x, y, cellWidth, cellHeight, color) {
+export function drawCell(ctx, currentCell, cellWidth, cellHeight, color, opacity = 1) {
     //draws a filled cell of cellWidth x cellHeight with given color
     ctx.fillStyle = color;
-    ctx.fillRect(x, y, cellWidth, cellHeight);
+    ctx.globalAlpha = opacity;
+    ctx.fillRect(currentCell.x, currentCell.y, cellWidth, cellHeight);
 }
-export function clearCell(ctx, x, y, cellWidth, cellHeight) {
-    ctx.clearRect(x, y, cellWidth, cellHeight);
+export function clearCell(ctx, currentCell, cellWidth, cellHeight) {
+    ctx.clearRect(currentCell.x, currentCell.y, cellWidth, cellHeight);
 }
 export function clearCanvas(ctx, width, height) {
     ctx.clearRect(0, 0, width, height);
