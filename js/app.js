@@ -9,8 +9,9 @@ activeColorHex = document.querySelector("#hex");
 
 
 //-----------------popup module-------------
-document.querySelector(".popup-module button").addEventListener("click", () => {
+document.querySelector(".popup-module button").addEventListener("click", function handler(){
     document.querySelector(".popup-module").classList.remove("active");
+    this.removeEventListener("click",handler);
 });
 document.querySelector(".tab .options").addEventListener("click", event => {
     //check if clicked tab is active or not

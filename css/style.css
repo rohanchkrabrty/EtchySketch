@@ -242,17 +242,43 @@ svg.IroBox {
   border-radius: 8px;
   color: #ffffff;
 }
+.select{
+  position: relative;
+}
 #download-options {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 14px;
+  color: #757575;
+  display: block;
   width: 74px;
   height: 40px;
-  background: #ffffff;
+  background-color: #ffffff;
   border: 1px solid #d3d3d3;
   border-radius: 8px;
-  text-align: center;
-  padding: 0;
+  padding: 12px 8px;
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+  cursor: pointer;
+  outline: none;
+}
+#download-options:hover,
+#download-options:focus{
+  border: 1px solid #c9c8c8;
+}
+.select::after{
+  content: "";
+  pointer-events: none;
+  width: 12px;
+  height: 7px;
+  background-image: url("/assets/dropdown.svg");
+  position: absolute;
+  top: 17px;
+  right: 12px;
+}
+#download-options options {
+  background-color: #e0492b;
 }
 /*--------MORE--------*/
 .more {
@@ -302,7 +328,7 @@ svg.IroBox {
   flex-flow: column nowrap;
   justify-content: flex-start;
 }
-.sidebar-extension section{
+.sidebar-extension section {
   opacity: 0;
   transition: opacity 0.4s ease-out 0.3s;
 }
@@ -312,7 +338,7 @@ svg.IroBox {
   left: 262px;
   opacity: 1;
 }
-.sidebar-extension.active section{
+.sidebar-extension.active section {
   opacity: 1;
   transition: opacity 1.2s ease-out;
 }
@@ -391,7 +417,7 @@ svg.IroBox {
   opacity: 0;
   transition: all 1s ease-in-out;
 }
-.popup-module.active{
+.popup-module.active {
   top: 54px;
   opacity: 1;
   transition: all 1s 0.2s ease-in-out;
@@ -403,10 +429,10 @@ svg.IroBox {
   position: relative;
   top: calc(-16px - 23px);
 }
-.popup-module .text{
+.popup-module .text {
   display: flex;
   flex-flow: column nowrap;
-  align-items: end;
+  align-items: flex-end;
 }
 .popup-module h2,
 .popup-module .button {
@@ -416,7 +442,7 @@ svg.IroBox {
   letter-spacing: -1px;
   margin: 0;
 }
-.popup-module .button{
+.popup-module .button {
   background: none;
   color: #ec5739;
 }
