@@ -105,7 +105,7 @@ function initializeCanvas() {
     canvas.clearCanvas(gridCanvas.ctx, canvasSize, canvasSize);
     canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
     canvas.drawGrid(gridCanvas.ctx, canvasSize, canvasSize, cellSize, cellSize, gridLines);
-    //fix for a shader + colopicker issue -  so filling the canvas with color
+    //TODO : fix for a shader + colopicker issue -  so filling the canvas with color
     drawingCanvas.ctx.fillStyle = "#ffffff";
     drawingCanvas.ctx.fillRect(0, 0, canvasSize, canvasSize);
     canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
@@ -213,4 +213,14 @@ document.addEventListener("keydown", e => {
 window.addEventListener("load",()=>{
     initializeCanvas();
     document.querySelector(".popup-module").classList.add("active");
+});
+
+//canvas download
+document.querySelector("#download-button").addEventListener("click", ()=>{
+    let imageFormat = document.querySelector("#download-options").value;
+    let imageUrl = drawingCanvas.toDataURL(`image/${imageFormat}`);
+    const a = document.createElement("a");
+    a.href = imageUrl;
+    a.setAttribute("download",`sketch.${imageFormat}`);
+    a.click();
 });
