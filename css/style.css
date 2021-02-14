@@ -76,16 +76,22 @@ canvas#grid-canvas.color-picker-mode {
 /*--------SIDEBAR--------*/
 .sidebar {
   /*filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));*/
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-rows: min-content min-content min-content auto;
+  grid-template-areas:
+    "toggle"
+    "heading"
+    "utilities"
+    "more";
   padding: 24px 24px 32px 32px;
   background-color: var(--main-background-color);
   z-index: 5;
+  justify-items: end;
+  align-items: end;
 }
 /*--------LIGHT DARK TOGGLE--------*/
 #toggleDark {
+  grid-area: toggle;
   position: relative;
   outline: none;
   appearance: none;
@@ -123,6 +129,7 @@ canvas#grid-canvas.color-picker-mode {
 /*--------HEADING--------*/
 section.heading {
   margin-bottom: 40px;
+  grid-area: heading;
 }
 header {
   width: 100%;
@@ -145,6 +152,9 @@ header h1 {
   padding-left: 12px;
 }
 /*--------UTILITIES--------*/
+.utilities {
+  grid-area: utilities;
+}
 .utilities > div:not(.download) {
   margin-bottom: 24px;
 }
@@ -318,6 +328,7 @@ svg.IroBox {
   align-items: flex-end;
   justify-content: space-around;
   flex: 1;
+  grid-area: more;
 }
 .more a {
   font-weight: 500;
