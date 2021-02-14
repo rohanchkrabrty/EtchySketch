@@ -11,6 +11,38 @@ html {
 *::after {
   box-sizing: inherit;
 }
+body {
+  --main-background-color: #ffffff;
+  --secondary-background-color: #f3f3f3;
+  --secondary-background-focus-color: #ebebeb;
+  --main-text-color: #212121;
+  --secondary-text-color: #757575;
+  --secondary-text-focus-color: rgba(117, 117, 117, 0.6);
+  --sidebar-extension-background-image: url("/assets/tree_illustration_light.png");
+  --highlight-color: #ec5739;
+  --highlight-focus-color: #e0492b;
+  --box-shadow-color: rgba(0, 0, 0, 0.15);
+  --border-color: #d3d3d3;
+  --border-focus-color: #c1c1c1;
+  --dark-toggle-border-color: rgba(211, 211, 211, 0.6);
+  --dark-toggle-border-focus-color: rgba(211, 211, 211, 0.8);
+  --canvas-border-color: #646464;
+}
+body.dark-theme {
+  --main-background-color: #212121;
+  --secondary-background-color: rgba(117, 117, 117, 0.3);
+  --secondary-background-focus-color: rgba(117, 117, 117, 0.4);
+  --main-text-color: #ffffff;
+  --secondary-text-color: #ffffff;
+  --secondary-text-focus-color: rgba(255, 255, 255, 0.6);
+  --sidebar-extension-background-image: url("/assets/tree_illustration_dark.png");
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+  --border-color: #757575;
+  --border-focus-color: #868686;
+  --dark-toggle-border-color: rgba(255, 255, 255, 0.2);
+  --dark-toggle-border-focus-color: rgba(255, 255, 255, 0.3);
+  --canvas-border-color: #a8a8a8;
+}
 .container {
   display: grid;
   grid-template-columns: 262px 1fr;
@@ -22,11 +54,11 @@ html {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #ffffff;
+  background-color: var(--main-background-color);
   position: relative;
 }
 canvas {
-  border: 1.5px solid #3a3a3a;
+  border: 2px solid var(--canvas-border-color);
   border-radius: 8px;
 }
 canvas#grid-canvas {
@@ -44,13 +76,12 @@ canvas#grid-canvas.color-picker-mode {
 /*--------SIDEBAR--------*/
 .sidebar {
   /*filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));*/
-  border-right: 2px solid #f3f3f3;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: flex-start;
   padding: 24px 24px 32px 32px;
-  background-color: #ffffff;
+  background-color: var(--main-background-color);
   z-index: 5;
 }
 /*--------LIGHT DARK TOGGLE--------*/
@@ -62,12 +93,12 @@ canvas#grid-canvas.color-picker-mode {
   -webkit-appearance: none;
   width: 58px;
   height: 30px;
-  border: 2px solid rgba(211, 211, 211, 0.6);
+  border: 2px solid var(--dark-toggle-border-color);
   border-radius: 40px;
   cursor: pointer;
 }
 #toggleDark:hover {
-  border: 2px solid rgba(211, 211, 211, 0.9);
+  border: 2px solid var(--dark-toggle-border-focus-color);
 }
 #toggleDark::before {
   content: "";
@@ -101,7 +132,7 @@ header h1 {
   font-size: 36px;
   line-height: 36px;
   letter-spacing: -1.5px;
-  color: #212121;
+  color: var(--main-text-color);
   margin: 0;
   margin-bottom: 8px;
 }
@@ -110,7 +141,7 @@ header h1 {
   font-size: 20px;
   line-height: 24px;
   letter-spacing: -0.5px;
-  color: #ec5739;
+  color: var(--highlight-color);
   padding-left: 12px;
 }
 /*--------UTILITIES--------*/
@@ -122,11 +153,11 @@ header h1 {
   position: relative;
   width: 100%;
   height: 36px;
-  background: #f3f3f3;
+  background-color: var(--secondary-background-color);
   border-radius: 8px;
   font-weight: 600;
   font-size: 14px;
-  color: rgba(117, 117, 117, 0.6);
+  color: var(--secondary-text-focus-color);
   text-align: center;
 }
 .options {
@@ -143,14 +174,14 @@ header h1 {
   flex: 1;
   cursor: pointer;
   z-index: 2;
-  transition: all ease-in 0.1s;
+  transition: color ease-in 0.1s;
 }
 .options li.active {
-  transition: all ease-in 400ms;
-  color: #ec5739;
+  transition: color ease-in 400ms;
+  color: var(--highlight-color);
 }
 .options li:not(.active):hover {
-  color: rgba(117, 117, 117, 0.9);
+  color: var(--secondary-text-color);
 }
 .slider {
   position: absolute;
@@ -158,11 +189,11 @@ header h1 {
   left: 4px;
   width: calc(50% - 4px);
   height: 28px;
-  background: #ffffff;
+  background: var(--main-background-color);
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
   border-radius: 6px;
   z-index: 1;
-  transition: all ease-in-out 400ms;
+  transition: left ease-in-out 400ms;
 }
 /*--------GRID CONTROLS--------*/
 .grid-controls {
@@ -173,13 +204,13 @@ header h1 {
 .grid-counter {
   width: 134px;
   height: 36px;
-  background: #f3f3f3;
+  background: var(--secondary-background-color);
   border-radius: 8px;
   padding: 4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  color: #757575;
+  color: var(--secondary-text-color);
   font-size: 14px;
 }
 .grid-counter button {
@@ -233,28 +264,28 @@ svg.IroBox {
   display: flex;
   justify-content: space-between;
   padding-top: 24px;
-  border-top: 1px dashed #d3d3d3;
+  border-top: 1px dashed var(--border-color);
 }
 #download-button {
   width: 120px;
   height: 40px;
-  background-color: #ec5739;
+  background-color: var(--highlight-color);
   border-radius: 8px;
   color: #ffffff;
 }
-.select{
+.select {
   position: relative;
 }
 #download-options {
   font-weight: 500;
   font-size: 14px;
   line-height: 14px;
-  color: #757575;
+  color: var(--secondary-text-color);
   display: block;
   width: 74px;
   height: 40px;
-  background-color: #ffffff;
-  border: 1px solid #d3d3d3;
+  background-color: var(--main-background-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 12px 8px;
   appearance: none;
@@ -264,10 +295,10 @@ svg.IroBox {
   outline: none;
 }
 #download-options:hover,
-#download-options:focus{
-  border: 1px solid #c9c8c8;
+#download-options:focus {
+  border: 1px solid var(--border-focus-color);
 }
-.select::after{
+.select::after {
   content: "";
   pointer-events: none;
   width: 12px;
@@ -278,15 +309,15 @@ svg.IroBox {
   right: 12px;
 }
 #download-options options {
-  background-color: #e0492b;
+  background-color: var(--highlight-focus-color);
 }
 /*--------MORE--------*/
 .more {
   width: 100%;
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-around;
-  margin-top: auto;
+  flex: 1;
 }
 .more a {
   font-weight: 500;
@@ -295,16 +326,16 @@ svg.IroBox {
   text-decoration: none;
 }
 #help-about {
-  color: #ec5739;
+  color: var(--highlight-color);
 }
 #help-about:hover {
-  color: #e0492b;
+  color: var(--highlight-focus-color);
 }
 #clear-all {
-  color: rgba(117, 117, 117, 0.6);
+  color: #757575;
 }
 #clear-all:hover {
-  color: #757575;
+  color: var(--secondary-text-color);
 }
 /*--------SIDEBAR EXTENSION--------*/
 .sidebar-extension {
@@ -315,11 +346,11 @@ svg.IroBox {
   height: 100vh;
   width: 340px;
   padding: 32px 32px 56px;
-  box-shadow: 4px 0px 48px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 4px 0px 48px 0px var(--box-shadow-color);
   z-index: 4;
   transition: left 0.5s ease-out 0.3s;
-  background-color: #ffffff;
-  background-image: url("/assets/tree_illustration.png");
+  background-color: var(--main-background-color);
+  background-image: var(--sidebar-extension-background-image);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: bottom 0px right 40px;
@@ -327,6 +358,7 @@ svg.IroBox {
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+  border-left: 2px solid var(--secondary-background-color);
 }
 .sidebar-extension section {
   opacity: 0;
@@ -349,18 +381,18 @@ svg.IroBox {
   top: 16px;
   /*sidebar extension width - (close button width / 2) */
   left: 320px;
-  background: #ffffff;
-  box-shadow: 4px 0px 48px rgba(0, 0, 0, 0.15);
+  background: var(--main-background-color);
+  box-shadow: 4px 0px 48px var(--box-shadow-color);
   border-radius: 50px;
-  color: #ec5739;
+  color: var(--highlight-color);
   font-size: 24px;
   line-height: 0;
   transform: scale(0) rotate(0deg);
-  transition: all 0.3s ease-out;
+  transition: transform 0.3s ease-out;
 }
 .sidebar-extension.active #close-extension {
   transform: scale(1) rotate(360deg);
-  transition: all 0.5s linear 0.1s;
+  transition: transform 0.5s linear 0.1s;
 }
 .sidebar-extension section:not(.share) {
   margin-top: 16px;
@@ -380,7 +412,7 @@ svg.IroBox {
   margin-top: 30px;
 }
 .about a {
-  color: #ec5739;
+  color: var(--highlight-color);
   text-decoration: underline;
 }
 .about a:hover {
@@ -409,8 +441,8 @@ svg.IroBox {
   z-index: 3;
   width: 324px;
   height: 92px;
-  background: #ffffff;
-  box-shadow: 4px 0px 56px rgba(0, 0, 0, 0.15);
+  background: var(--main-background-color);
+  box-shadow: 4px 0px 56px var(--box-shadow-color);
   border-radius: 8px;
   padding: 16px;
   display: flex;
@@ -444,7 +476,7 @@ svg.IroBox {
 }
 .popup-module .button {
   background: none;
-  color: #ec5739;
+  color: var(--highlight-color);
 }
 /*--------COMMON--------*/
 h2 {
@@ -452,7 +484,7 @@ h2 {
   font-size: 28px;
   line-height: 36px;
   letter-spacing: -1.5px;
-  color: #212121;
+  color: var(--main-text-color);
   margin: 0 0 8px 0;
 }
 p {
@@ -463,7 +495,7 @@ p {
 }
 strong {
   font-weight: 600;
-  color: #212121;
+  color: var(--main-text-color);
 }
 .button img,
 .button svg {
@@ -471,7 +503,7 @@ strong {
 }
 #toggle-lines svg,
 #eye-dropper svg {
-  fill: #757575;
+  fill: var(--secondary-text-color);
 }
 button > * {
   pointer-events: none;
@@ -482,12 +514,12 @@ button > * {
   display: block;
   border: none;
   border-radius: 6px;
-  background-color: #f3f3f3;
+  background-color: var(--secondary-background-color);
   text-align: center;
-  color: #757575;
+  color: var(--secondary-text-color);
   font-size: 14px;
   cursor: pointer;
-  transition: all 150ms ease;
+  transition: transform 150ms ease;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
@@ -497,9 +529,9 @@ input[type="text"] {
   display: block;
   border: none;
   border-radius: 6px;
-  background-color: #f3f3f3;
+  background-color: var(--secondary-background-color);
   text-align: center;
-  color: #757575;
+  color: var(--secondary-text-color);
   font-size: 14px;
   transition: background 150ms ease;
 }
@@ -509,16 +541,23 @@ input[type="text"]:focus,
 select:hover,
 select:focus {
   outline: none;
-  background-color: #ebebeb;
+  background-color: var(--secondary-background-focus-color);
 }
 button:active {
   padding: 0px;
 }
 .special.button {
-  background: #ffffff;
+  background: var(--main-background-color);
   box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.12);
-  color: #ec5739;
+  color: var(--highlight-color);
 }
 .special.button:active {
   transform: scale(0.95);
+}
+
+/*TABLETS*/
+@media only screen and (max-width: 768px) {
+}
+/*MOBILE*/
+@media only screen and (max-width: 480px) {
 }

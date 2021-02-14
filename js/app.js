@@ -7,11 +7,25 @@ let activeColor, activeColorHex;
 activeColor = document.querySelector("#active-color");
 activeColorHex = document.querySelector("#hex");
 
-
+//-------------dark light toggle------------
+function toggleTheme() {
+    if (document.querySelector("#toggleDark").checked) //dark
+        document.body.classList.add("dark-theme");
+    else //light
+        document.body.classList.remove("dark-theme");
+    initializeGrid();
+}
+function getCurrentTheme() {
+    if (document.querySelector("#toggleDark").checked)
+        return "dark";
+    else
+        return "light";
+}
+document.querySelector("#toggleDark").addEventListener("click", toggleTheme);
 //-----------------popup module-------------
-document.querySelector(".popup-module button").addEventListener("click", function handler(){
+document.querySelector(".popup-module button").addEventListener("click", function handler() {
     document.querySelector(".popup-module").classList.remove("active");
-    this.removeEventListener("click",handler);
+    this.removeEventListener("click", handler);
 });
 document.querySelector(".tab .options").addEventListener("click", event => {
     //check if clicked tab is active or not
@@ -102,15 +116,20 @@ function initializeCanvas() {
 
     canvas.resizeCanvas(gridCanvas, canvasSize, canvasSize);
     canvas.resizeCanvas(drawingCanvas, canvasSize, canvasSize);
-    canvas.clearCanvas(gridCanvas.ctx, canvasSize, canvasSize);
     canvas.clearCanvas(drawingCanvas.ctx, canvasSize, canvasSize);
-    canvas.drawGrid(gridCanvas.ctx, canvasSize, canvasSize, cellSize, cellSize, gridLines);
+    initializeGrid();
     //TODO : fix for a shader + colopicker issue -  so filling the canvas with color
-    drawingCanvas.ctx.fillStyle = "#ffffff";
-    drawingCanvas.ctx.fillRect(0, 0, canvasSize, canvasSize);
+    //drawingCanvas.ctx.fillStyle = "#ffffff";
+    //drawingCanvas.ctx.fillRect(0, 0, canvasSize, canvasSize);
     canvas.save(drawingCanvas.ctx, canvasSize, canvasSize);
 }
-
+function initializeGrid() {
+    canvas.clearCanvas(gridCanvas.ctx, canvasSize, canvasSize);
+    if (getCurrentTheme() === "dark")
+        canvas.drawGrid(gridCanvas.ctx, canvasSize, canvasSize, cellSize, cellSize, gridLines, "#ebebeb");
+    else
+        canvas.drawGrid(gridCanvas.ctx, canvasSize, canvasSize, cellSize, cellSize, gridLines, "#000000");
+}
 //color picker
 document.querySelector("#eye-dropper").addEventListener("click", () => {
     colorPickerMode = !colorPickerMode;
@@ -167,7 +186,7 @@ gridCanvas.addEventListener("mousemove", e => {
         let currentCell = canvas.getCurrentCell(gridCanvas, e.clientX, e.clientY, cellSize, cellSize);
         if (shaderMode) {
             if (currentCell.x === previousCell.x && currentCell.y === previousCell.y);
-            else{
+            else {
                 canvas.drawCell(drawingCanvas.ctx, currentCell, cellSize, cellSize, "#000000", 0.1);
                 previousCell.x = currentCell.x;
                 previousCell.y = currentCell.y;
@@ -210,17 +229,21 @@ document.addEventListener("keydown", e => {
     }
 });
 
-window.addEventListener("load",()=>{
-    initializeCanvas();
-    document.querySelector(".popup-module").classList.add("active");
-});
-
 //canvas download
-document.querySelector("#download-button").addEventListener("click", ()=>{
+document.querySelector("#download-button").addEventListener("click", () => {
     let imageFormat = document.querySelector("#download-options").value;
     let imageUrl = drawingCanvas.toDataURL(`image/${imageFormat}`);
     const a = document.createElement("a");
     a.href = imageUrl;
-    a.setAttribute("download",`sketch.${imageFormat}`);
+    a.setAttribute("download", `sketch.${imageFormat}`);
     a.click();
+});
+
+
+
+//onload
+window.addEventListener("load", () => {
+    toggleTheme();
+    initializeCanvas();
+    document.querySelector(".popup-module").classList.add("active");
 });
