@@ -1,5 +1,11 @@
 ## EtchySketch
-A simple mosaic art generator on your browser. Check it out [here](https://etchysketch.netlify.app/).  
+A simple mosaic art generator on your browser. Check it out [here](https://etchysketch.netlify.app/). 
+
+### Help
+* **Draw** - Click / Drag on any block
+* **Erase** - Control (Cmd) + Click / Drag
+* **Undo** - Control + Z (Cmd + Z on Mac)
+* **Redo** - Control + Y (Cmd + Y on Mac) 
 
 ### Details
 
